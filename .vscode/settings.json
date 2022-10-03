@@ -1,0 +1,9 @@
+{
+  "workbench.colorCustomizations": {
+    "titleBar.activeForeground": "#000",
+    "titleBar.inactiveForeground": "#000000cc",
+    "titleBar.activeBackground": "#d8fc60",
+    "titleBar.inactiveBackground": "#d8fc60"
+  },
+  "cSpell.words": ["drei", "gltf", "Raycaster", "stdlib", "webp", "webxr", "wireframe"]
+}

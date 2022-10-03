@@ -1,0 +1,58 @@
+{
+  "name": "@topashq/toolkit",
+  "version": "0.0.1",
+  "description": "A collection of tools for creating apps in Topas City",
+  "author": "TopasHQ <info@topas.city>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TopasHQ/toolkit.git"
+  },
+  "bugs": {
+    "url": "https://github.com/TopasHQ/toolkit.git"
+  },
+  "license": "MIT",
+  "keywords": [
+    "vr",
+    "webxr",
+    "blockchain",
+    "lisk",
+    "nodejs",
+    "javascript",
+    "typescript"
+  ],
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "install:clean": "rm -rf node_modules && rm -f package-lock.json && npm i",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rimraf ./dist && tsc -p ./tsconfig.json && copyfiles -u 1 src/assets/**/* dist && copyfiles LICENSE package.json README.md dist",
+    "build:dev": "npm run build && rimraf ../toolkit-dev && mkdir -p ../toolkit-dev && copyfiles -u 1 \"dist/**/*\" ../toolkit-dev"
+  },
+  "devDependencies": {
+    "@react-spring/three": "^9.5.5",
+    "@react-three/drei": "^9.32.3",
+    "@react-three/xr": "^5.0.1",
+    "@types/react": "^18.0.21",
+    "@types/three": "^0.141.0",
+    "copyfiles": "^2.4.1",
+    "react": "^18.2.0",
+    "react-hotkeys-hook": "^3.4.7",
+    "rimraf": "^3.0.2",
+    "three": "^0.141.0",
+    "typescript": "^4.8.3",
+    "use-sound": "^4.0.1"
+  },
+  "peerDependencies": {
+    "@react-spring/three": ">=9.0.0",
+    "@react-three/drei": ">=9.0.0",
+    "@react-three/xr": ">=5.0",
+    "react": ">=18.0",
+    "react-hotkeys-hook": ">=3.0",
+    "three": ">=0.141",
+    "use-sound": ">=4.0"
+  }
+}
