@@ -73,6 +73,18 @@ Placeholder
 
 Placeholder
 
+### getRandomElementFromArray
+
+Placeholder
+
+### getRandomNumberBetweenRange
+
+Placeholder
+
+### getRandomFloat
+
+Placeholder
+
 ### resetPlayer
 
 Placeholder

@@ -6,3 +6,16 @@ export const isInRange = (event: XRInteractionEvent, selectorDistance: number) =
   }
   return event.intersection.distance < selectorDistance;
 };
+
+export const getRandomElementFromArray = <T>(array: T[]) =>
+  array[Math.floor(Math.random() * array.length)];
+
+export const getRandomNumberBetweenRange = (min: number, max: number) => {
+  return Math.random() * (max - min) + min;
+};
+
+export const getRandomFloat = (min: number, max: number, decimals: number) => {
+  const str = (Math.random() * (max - min) + min).toFixed(decimals);
+
+  return parseFloat(str);
+};
