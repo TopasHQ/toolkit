@@ -44,7 +44,8 @@
     "rimraf": "^3.0.2",
     "three": "0.143.0",
     "typescript": "4.8.3",
-    "use-sound": "^4.0.1"
+    "use-sound": "^4.0.1",
+    "uuid": "^9.0.0"
   },
   "peerDependencies": {
     "@react-spring/three": ">=9.0.0",
@@ -53,6 +54,7 @@
     "react": ">=18.0",
     "react-hotkeys-hook": ">=3.0",
     "three": ">=0.143",
-    "use-sound": ">=4.0"
+    "use-sound": ">=4.0",
+    "uuid": ">=9.0.0"
   }
 }

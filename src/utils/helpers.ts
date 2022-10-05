@@ -1,4 +1,5 @@
 import { XRInteractionEvent } from '@react-three/xr';
+import { v4 as uuidv4 } from 'uuid';
 
 export const isInRange = (event: XRInteractionEvent, selectorDistance: number) => {
   if (!event.intersection) {
@@ -19,3 +20,5 @@ export const getRandomFloat = (min: number, max: number, decimals: number) => {
 
   return parseFloat(str);
 };
+
+export const generateId = () => uuidv4();
