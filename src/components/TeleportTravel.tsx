@@ -1,5 +1,5 @@
 import { useFrame } from '@react-three/fiber';
-import { Interactive, useXR } from '@react-three/xr';
+import { Interactive, useController, useXR } from '@react-three/xr';
 import { useCallback, useRef, useState } from 'react';
 import { Group, Raycaster, Vector3 } from 'three';
 
@@ -20,36 +20,26 @@ const isValidPosition = (position: Vector3, restriction: PositionalRestriction) 
   return isValid;
 };
 
-const IndicatorFallBack = () => {
-  return (
-    <>
-      <mesh position={[0, 0.25, 0]}>
-        <coneBufferGeometry args={[0.2, 0.7, 12]} attach='geometry' />
-        <meshPhongMaterial
-          color='#a347ff'
-          emissive='#a347ff'
-          emissiveIntensity={1}
-          transparent={true}
-          opacity={0.7}
-        />
-      </mesh>
-    </>
-  );
-};
+const Indicator = () => (
+  <mesh position={[0, 0.25, 0]}>
+    <coneBufferGeometry args={[0.2, 0.7, 12]} attach='geometry' />
+    <meshPhongMaterial
+      color='#a347ff'
+      emissive='#a347ff'
+      emissiveIntensity={1}
+      transparent={true}
+      opacity={0.7}
+    />
+  </mesh>
+);
 
 type Props = {
   children: any;
-  indicator?: JSX.Element;
-  controllerIndex?: number;
   positionalRestriction?: PositionalRestriction;
+  hand?: "left" | "right";
 };
 
-export const TeleportTravel = ({
-  children,
-  indicator = <IndicatorFallBack />,
-  controllerIndex = 0,
-  positionalRestriction,
-}: Props) => {
+export const TeleportTravel = ({ children, positionalRestriction, hand = "right" }: Props) => {
   const [isHovered, setIsHovered] = useState(false);
 
   const target = useRef<Group>(null);
@@ -61,17 +51,16 @@ export const TeleportTravel = ({
     dir: new Vector3(),
   });
 
-  const { controllers, player } = useXR();
+  const { player } = useXR();
+  const controller = useController(hand);
 
   useFrame(() => {
-    if (
-      !(isHovered && controllers.length > 0 && ray.current && target.current && targetLoc.current)
-    ) {
+    if (!(isHovered && controller && ray.current && target.current && targetLoc.current)) {
       return;
     }
 
-    controllers[controllerIndex].controller.getWorldDirection(rayDir.current.dir);
-    controllers[controllerIndex].controller.getWorldPosition(rayDir.current.pos);
+    controller.controller.getWorldDirection(rayDir.current.dir);
+    controller.controller.getWorldPosition(rayDir.current.pos);
     rayDir.current.dir.multiplyScalar(-1);
     ray.current.set(rayDir.current.pos, rayDir.current.dir);
 
@@ -96,36 +85,51 @@ export const TeleportTravel = ({
     }
   });
 
-  const onSelect = useCallback(() => {
-    if (!target.current || !targetLoc.current) {
-      return;
-    }
-
-    if (isHovered && ray.current.intersectObject(target.current)[0].object.name === "traversable") {
-      const newPlayerPosition = new Vector3(
-        targetLoc.current.position.x,
-        0,
-        targetLoc.current.position.z
-      );
-
-      if (positionalRestriction && !isValidPosition(newPlayerPosition, positionalRestriction)) {
-        if (positionalRestriction.cb) {
-          positionalRestriction.cb();
-        }
-
-        console.debug("Not allowed to go here");
+  const onSelect = useCallback(
+    props => {
+      /** ignore other hand */
+      if (props.target.inputSource.handedness !== hand) {
         return;
       }
 
-      player.position.copy(newPlayerPosition);
+      if (!target.current || !targetLoc.current) {
+        return;
+      }
 
-      player.rotation.copy(player.rotation);
-    }
-  }, [isHovered, player.rotation, player.position, positionalRestriction]);
+      if (
+        isHovered &&
+        ray.current.intersectObject(target.current)[0].object.name === "traversable"
+      ) {
+        const newPlayerPosition = new Vector3(
+          targetLoc.current.position.x,
+          0,
+          targetLoc.current.position.z
+        );
+
+        if (positionalRestriction && !isValidPosition(newPlayerPosition, positionalRestriction)) {
+          if (positionalRestriction.cb) {
+            positionalRestriction.cb();
+          }
+
+          console.debug("Not allowed to go here");
+          return;
+        }
+
+        player.position.copy(newPlayerPosition);
+        player.rotation.copy(player.rotation);
+      }
+    },
+    [isHovered, player.rotation, player.position, positionalRestriction]
+  );
 
   return (
     <>
-      {isHovered && <group ref={targetLoc}>{indicator}</group>}
+      {isHovered && (
+        <group ref={targetLoc}>
+          <Indicator />
+        </group>
+      )}
+
       <group ref={target}>
         <Interactive
           onSelect={onSelect}
