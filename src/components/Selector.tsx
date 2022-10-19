@@ -6,21 +6,21 @@ import { Vector3 } from 'three';
 
 import { isInRange } from '../utils';
 
-type Props = {
+const selectorDistance = 10;
+
+type SelectorProps = {
   onSelect: () => void;
   color: string;
   position: Vector3;
   sparklesCount?: number;
 };
 
-const selectorDistance = 10;
-
 export const Selector = ({
   onSelect,
   color,
   position,
   sparklesCount = 50,
-}: Props): ReactElement => {
+}: SelectorProps): ReactElement => {
   const [hovered, setHovered] = useState(false);
   const { scale } = useSpring({ scale: hovered ? 1.2 : 1 });
 
@@ -49,13 +49,12 @@ export const Selector = ({
   );
 };
 
-const Globe = ({
-  color,
-  sparklesCount,
-}: {
+type GlobeProps = {
   color: string;
   sparklesCount: number;
-}): ReactElement => {
+};
+
+const Globe = ({ color, sparklesCount }: GlobeProps): ReactElement => {
   return (
     <>
       <SphereDrei scale={0.5} position={[0, 1, 0]} args={[1, 10, 10]}>
