@@ -6,15 +6,21 @@ import { Vector3 } from 'three';
 
 import { isInRange } from '../utils';
 
-type Props = {
+const selectorDistance = 10;
+
+type SelectorProps = {
   onSelect: () => void;
   color: string;
   position: Vector3;
+  sparklesCount?: number;
 };
 
-const selectorDistance = 10;
-
-export const Selector = ({ onSelect, color, position }: Props): ReactElement => {
+export const Selector = ({
+  onSelect,
+  color,
+  position,
+  sparklesCount = 50,
+}: SelectorProps): ReactElement => {
   const [hovered, setHovered] = useState(false);
   const { scale } = useSpring({ scale: hovered ? 1.2 : 1 });
 
@@ -34,7 +40,7 @@ export const Selector = ({ onSelect, color, position }: Props): ReactElement => 
     <animated.group position={position} scale={scale}>
       <Float>
         <Interactive onHover={handleHover} onBlur={handleBlur} onSelect={handleOnSelect}>
-          <Globe color={color} />
+          <Globe color={color} sparklesCount={sparklesCount} />
         </Interactive>
       </Float>
 
@@ -43,14 +49,19 @@ export const Selector = ({ onSelect, color, position }: Props): ReactElement => 
   );
 };
 
-const Globe = ({ color }: { color: string }): ReactElement => {
+type GlobeProps = {
+  color: string;
+  sparklesCount: number;
+};
+
+const Globe = ({ color, sparklesCount }: GlobeProps): ReactElement => {
   return (
     <>
       <SphereDrei scale={0.5} position={[0, 1, 0]} args={[1, 10, 10]}>
         <meshStandardMaterial transparent opacity={0.4} wireframe color={color} />
       </SphereDrei>
 
-      <Sparkles position={[0, 1.1, 0]} size={1.5} scale={1} color={color} />
+      <Sparkles position={[0, 1.1, 0]} size={1.5} scale={1} color={color} count={sparklesCount} />
     </>
   );
 };
