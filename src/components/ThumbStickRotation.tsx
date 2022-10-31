@@ -2,21 +2,21 @@ import { useFrame } from '@react-three/fiber';
 import { useController, useXR } from '@react-three/xr';
 import { useState } from 'react';
 
-export const ThumbStickRotation = ({ hand = "right" }: { hand?: "left" | "right" }) => {
+export const ThumbStickRotation = ({ hand = 'right' }: { hand?: 'left' | 'right' }) => {
   const [ignoreInput, setIgnoreInput] = useState(false);
 
   const controller = useController(hand);
 
   const { player } = useXR();
 
-  const rotate = (direction: "left" | "right") => {
+  const rotate = (direction: 'left' | 'right') => {
     if (ignoreInput) {
       return;
     }
 
     setIgnoreInput(true);
 
-    player.rotateY(direction === "left" ? Math.PI / 4 : -Math.PI / 4);
+    player.rotateY(direction === 'left' ? Math.PI / 4 : -Math.PI / 4);
   };
 
   useFrame(() => {
@@ -28,11 +28,11 @@ export const ThumbStickRotation = ({ hand = "right" }: { hand?: "left" | "right"
       }
 
       if (yRotation < -0.2) {
-        rotate("left");
+        rotate('left');
       }
 
       if (yRotation > 0.2) {
-        rotate("right");
+        rotate('right');
       }
     }
   });

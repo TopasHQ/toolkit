@@ -8,8 +8,7 @@ export const isInRange = (event: XRInteractionEvent, selectorDistance: number) =
   return event.intersection.distance < selectorDistance;
 };
 
-export const getRandomElementFromArray = <T>(array: T[]) =>
-  array[Math.floor(Math.random() * array.length)];
+export const getRandomElementFromArray = <T>(array: T[]) => array[Math.floor(Math.random() * array.length)];
 
 export const getRandomNumberBetweenRange = (min: number, max: number) => {
   return Math.random() * (max - min) + min;

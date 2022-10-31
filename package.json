@@ -29,8 +29,9 @@
   "scripts": {
     "install:clean": "rm -rf node_modules && rm -f package-lock.json && npm i",
     "test": "echo \"Error: no test specified\"",
-    "build": "rimraf ./dist && tsc -p ./tsconfig.json && copyfiles -u 1 src/assets/**/* dist && copyfiles LICENSE package.json README.md dist",
-    "build:dev": "npm run build && rimraf ../toolkit-dev && mkdir -p ../toolkit-dev && copyfiles -u 1 \"dist/**/*\" ../toolkit-dev"
+    "build": "rimraf ./dist && tsc -p ./tsconfig.json && copyfiles -u 1 src/assets/**/* dist",
+    "build:dev": "npm run build && rimraf ../toolkit-dev && mkdir -p ../toolkit-dev && copyfiles -u 1 \"dist/**/*\" ../toolkit-dev",
+    "prepublish": "npm run build"
   },
   "devDependencies": {
     "@react-spring/three": "9.5.5",
