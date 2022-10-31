@@ -44,7 +44,7 @@ export const FadeToBlack = ({ callback, delay = 0 }: Props) => {
 
   return (
     <Plane ref={boxRef} scale={3}>
-      <meshBasicMaterial ref={meshRef} color='black' transparent opacity={0} />
+      <meshBasicMaterial ref={meshRef} color="black" transparent opacity={0} />
     </Plane>
   );
 };

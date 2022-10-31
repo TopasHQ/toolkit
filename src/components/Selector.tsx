@@ -15,12 +15,7 @@ type SelectorProps = {
   sparklesCount?: number;
 };
 
-export const Selector = ({
-  onSelect,
-  color,
-  position,
-  sparklesCount = 50,
-}: SelectorProps): ReactElement => {
+export const Selector = ({ onSelect, color, position, sparklesCount = 50 }: SelectorProps): ReactElement => {
   const [hovered, setHovered] = useState(false);
   const { scale } = useSpring({ scale: hovered ? 1.2 : 1 });
 

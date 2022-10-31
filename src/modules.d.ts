@@ -1,9 +1,9 @@
-declare module "*.mp3" {
+declare module '*.mp3' {
   const value: any;
   export default value;
 }
 
-declare module "*.ttf" {
+declare module '*.ttf' {
   const value: any;
   export default value;
 }
