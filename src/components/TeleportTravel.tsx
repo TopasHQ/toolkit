@@ -3,7 +3,11 @@ import { Interactive, useController, useXR } from '@react-three/xr';
 import { useCallback, useRef, useState } from 'react';
 import { Group, Raycaster, Vector3 } from 'three';
 
-export type PositionalRestriction = { x: [number, number]; z: [number, number]; cb?: Function };
+export type PositionalRestriction = {
+  x: [number, number];
+  z: [number, number];
+  cb?: Function;
+};
 
 const isValidPosition = (position: Vector3, restriction: PositionalRestriction) => {
   let isValid = true;
@@ -22,24 +26,18 @@ const isValidPosition = (position: Vector3, restriction: PositionalRestriction) 
 
 const Indicator = () => (
   <mesh position={[0, 0.25, 0]}>
-    <coneBufferGeometry args={[0.2, 0.7, 12]} attach='geometry' />
-    <meshPhongMaterial
-      color='#a347ff'
-      emissive='#a347ff'
-      emissiveIntensity={1}
-      transparent={true}
-      opacity={0.7}
-    />
+    <coneBufferGeometry args={[0.2, 0.7, 12]} attach="geometry" />
+    <meshPhongMaterial color="#a347ff" emissive="#a347ff" emissiveIntensity={1} transparent={true} opacity={0.7} />
   </mesh>
 );
 
 type Props = {
   children: any;
   positionalRestriction?: PositionalRestriction;
-  hand?: "left" | "right";
+  hand?: 'left' | 'right';
 };
 
-export const TeleportTravel = ({ children, positionalRestriction, hand = "right" }: Props) => {
+export const TeleportTravel = ({ children, positionalRestriction, hand = 'right' }: Props) => {
   const [isHovered, setIsHovered] = useState(false);
 
   const target = useRef<Group>(null);
@@ -66,7 +64,7 @@ export const TeleportTravel = ({ children, positionalRestriction, hand = "right"
 
     const [intersection] = ray.current.intersectObject(target.current);
 
-    if (intersection?.object?.name === "traversable") {
+    if (intersection?.object?.name === 'traversable') {
       const p = intersection.point;
       targetLoc.current.position.set(0, 0, 0);
       const n = intersection.face?.normal.clone();
@@ -96,14 +94,11 @@ export const TeleportTravel = ({ children, positionalRestriction, hand = "right"
         return;
       }
 
-      if (
-        isHovered &&
-        ray.current.intersectObject(target.current)[0].object.name === "traversable"
-      ) {
+      if (isHovered && ray.current.intersectObject(target.current)[0].object.name === 'traversable') {
         const newPlayerPosition = new Vector3(
           targetLoc.current.position.x,
-          0,
-          targetLoc.current.position.z
+          targetLoc.current.position.y,
+          targetLoc.current.position.z,
         );
 
         if (positionalRestriction && !isValidPosition(newPlayerPosition, positionalRestriction)) {
@@ -111,7 +106,7 @@ export const TeleportTravel = ({ children, positionalRestriction, hand = "right"
             positionalRestriction.cb();
           }
 
-          console.debug("Not allowed to go here");
+          console.debug('Not allowed to go here');
           return;
         }
 
@@ -119,7 +114,7 @@ export const TeleportTravel = ({ children, positionalRestriction, hand = "right"
         player.rotation.copy(player.rotation);
       }
     },
-    [isHovered, player.rotation, player.position, positionalRestriction]
+    [isHovered, player.rotation, player.position, positionalRestriction],
   );
 
   return (
@@ -131,11 +126,7 @@ export const TeleportTravel = ({ children, positionalRestriction, hand = "right"
       )}
 
       <group ref={target}>
-        <Interactive
-          onSelect={onSelect}
-          onHover={() => setIsHovered(true)}
-          onBlur={() => setIsHovered(false)}
-        >
+        <Interactive onSelect={onSelect} onHover={() => setIsHovered(true)} onBlur={() => setIsHovered(false)}>
           {children}
         </Interactive>
       </group>
