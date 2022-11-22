@@ -57,5 +57,8 @@
     "three": ">=0.143",
     "use-sound": ">=4.0",
     "uuid": ">=9.0.0"
+  },
+  "dependencies": {
+    "@topashq/toolkit": "file:../toolkit-dev"
   }
 }
