@@ -36,6 +36,7 @@
   "devDependencies": {
     "@react-spring/three": "9.5.5",
     "@react-three/drei": "9.32.7",
+    "@react-three/fiber": "8.8.8",
     "@react-three/xr": "5.0.3",
     "@types/react": "^18.0.21",
     "@types/three": "0.143.0",
@@ -51,14 +52,12 @@
   "peerDependencies": {
     "@react-spring/three": ">=9.0.0",
     "@react-three/drei": ">=9.0.0",
+    "@react-three/fiber": ">=8.0.0",
     "@react-three/xr": ">=5.0",
     "react": ">=18.0",
     "react-hotkeys-hook": ">=3.0",
     "three": ">=0.143",
     "use-sound": ">=4.0",
     "uuid": ">=9.0.0"
-  },
-  "dependencies": {
-    "@topashq/toolkit": "file:../toolkit-dev"
   }
 }

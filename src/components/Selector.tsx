@@ -1,8 +1,8 @@
 import { animated, useSpring } from '@react-spring/three';
 import { Float, Shadow, Sparkles, Sphere as SphereDrei } from '@react-three/drei';
+import { Vector3 } from '@react-three/fiber';
 import { Interactive, XRInteractionEvent } from '@react-three/xr';
 import { ReactElement, useState } from 'react';
-import { Vector3 } from 'three';
 
 import { isInRange } from '../utils';
 
