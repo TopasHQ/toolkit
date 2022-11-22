@@ -10,16 +10,16 @@ const selectorDistance = 10;
 
 type SelectorProps = {
   onSelect: () => void;
-  color: string;
-  position: Vector3;
+  color?: string;
+  position?: Vector3;
   sparklesCount?: number;
   customComponent?: ({ color }: GlobeProps) => JSX.Element;
 };
 
 export const Selector = ({
   onSelect,
-  color,
-  position,
+  color = 'white',
+  position = [0, 0, 0],
   sparklesCount = 50,
   customComponent,
 }: SelectorProps): ReactElement => {
@@ -54,7 +54,7 @@ export const Selector = ({
 };
 
 type GlobeProps = {
-  color: string;
+  color?: string;
 };
 
 const Globe = ({ color }: GlobeProps) => {
